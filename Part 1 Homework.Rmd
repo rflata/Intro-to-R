@@ -66,6 +66,8 @@ summary(sleeptable$BrainWt_BodyWt_Ratio)
 sleeptable[which.min(sleeptable$BrainWt_BodyWt_Ratio), ]
 sleeptable[which.max(sleeptable$BrainWt_BodyWt_Ratio), ]
 ```
+Smallest Ratio = Africanelephant
+Largest Ratio = Groundsquirrel
 
 6. Do bigger animals sleep longer or live longer? Show your results using a correlation coefficient.
 
