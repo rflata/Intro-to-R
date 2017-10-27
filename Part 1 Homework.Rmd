@@ -34,11 +34,11 @@ sleeptable[which(sleeptable$BodyWt==6654.00), ]
 
 2. Which variables have missing data?
 
-Variables with value of NA
-NonDreaming
-Dreaming
-TotalSleep
-LifeSpan
+Variables with value of NA:
+NonDreaming,
+Dreaming,
+TotalSleep,
+LifeSpan,
 Gestation
 
 3. Calculate the mean and standard deviation for TotalSleep.
@@ -59,18 +59,41 @@ hist(log(sleeptable$BodyWt,base=10),xlab = "Body Weight")
 5. Calculate the ratio of BrainWt to BodyWt and express it as a percentage. Be sure to convert grams to kilograms (or vice versa) before computing the ratio. What animal has the smallest/largest ratio?
 
 ```{r calculating ratio and add to data frame}
-sleeptable["BrainWt_BodyWt_Ratio"] <- sleeptable$BrainWt/((sleeptable$BodyWt)*1000)
+sleeptable["BrainWt_BodyWt_Ratio"] <- (sleeptable$BrainWt/((sleeptable$BodyWt)*1000))*100
 summary(sleeptable$BrainWt_BodyWt_Ratio)
 ```
 ```{r smallest and largest}
 sleeptable[which.min(sleeptable$BrainWt_BodyWt_Ratio), ]
 sleeptable[which.max(sleeptable$BrainWt_BodyWt_Ratio), ]
 ```
-Smallest Ratio = Africanelephant
+Smallest Ratio = Africanelephant 
 Largest Ratio = Groundsquirrel
 
 6. Do bigger animals sleep longer or live longer? Show your results using a correlation coefficient.
 
+```{r correlation}
+round(100*cor(sleeptable[,-1],use = "pairwise.complete.obs"),2)
+```
+  
+                  TotalSleep LifeSpan
+       BodyWt     -30.72    30.25
+Bigger animals live longer. Positive correlation between lifespan and BodyWt
+
 7. Do animals who have high degrees of Predation, Exposure, or Danger sleep less? Show your results using a plot and a trendline.
+
+```{r Total Sleep vs Predation}
+plot(sleeptable$TotalSleep,sleeptable$Predation,xlab = "Total Sleep",ylab="Predation")
+abline(lm(sleeptable$TotalSleep~sleeptable$Predation))
+```
+```{r Total Sleep vs Exposure}
+plot(sleeptable$TotalSleep,sleeptable$Exposure,xlab = "Total Sleep",ylab="Exposure")
+abline(lm(sleeptable$TotalSleep~sleeptable$Exposure))
+```
+```{r Total Sleep vs Danger}
+plot(sleeptable$TotalSleep,sleeptable$Danger,xlab = "Total Sleep",ylab="Danger")
+abline(lm(sleeptable$TotalSleep~sleeptable$Danger))
+```
+
+Yes, based on the trend line animals with a higher degree of Predation, Exposure, and Danger sleep less
 
 8. Place all the key results into a Word document or PowerPoint presentation, or as a PDF file or as an HTML file. Turn it in by email. Use the subject line: "Introduction to R, (your name), Part 1 Homework"
