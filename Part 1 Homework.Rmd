@@ -82,15 +82,15 @@ Bigger animals live longer. Positive correlation between lifespan and BodyWt
 7. Do animals who have high degrees of Predation, Exposure, or Danger sleep less? Show your results using a plot and a trendline.
 
 ```{r Total Sleep vs Predation}
-plot(sleeptable$TotalSleep,sleeptable$Predation,xlab = "Total Sleep",ylab="Predation")
+plot(sleeptable$Predation,sleeptable$TotalSleep,xlab = "Predation",ylab="Total Sleep")
 abline(lm(sleeptable$TotalSleep~sleeptable$Predation))
 ```
 ```{r Total Sleep vs Exposure}
-plot(sleeptable$TotalSleep,sleeptable$Exposure,xlab = "Total Sleep",ylab="Exposure")
+plot(sleeptable$Exposure,sleeptable$TotalSleep,xlab = "Exposure",ylab="Total Sleep")
 abline(lm(sleeptable$TotalSleep~sleeptable$Exposure))
 ```
 ```{r Total Sleep vs Danger}
-plot(sleeptable$TotalSleep,sleeptable$Danger,xlab = "Total Sleep",ylab="Danger")
+plot(sleeptable$Danger,sleeptable$TotalSleep,xlab = "Danger",ylab="Total Sleep")
 abline(lm(sleeptable$TotalSleep~sleeptable$Danger))
 ```
 

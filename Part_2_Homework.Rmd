@@ -1,0 +1,99 @@
+---
+title: "Part 2 Homework"
+output: html_document
+---
+```{r version-and-curren-date}
+R.version.string
+Sys.Date()
+```
+
+```{r read-gardasil}
+fn <- "gardasil.csv"
+ga <- read.csv(fn)
+head(ga)
+tail(ga)
+```
+1. Create factors for AgeGroup, Race, Completed, Location.
+
+```{r-factors}
+ga$AgeGroup.factor <- factor(ga$AgeGroup,levels = 0:1, labels = c("11-17","18-26"))
+ga$Race.factor <- factor(ga$Race,levels = 0:3, labels = c("white","black","Hispanic","other/unknown"))
+ga$Completed.factor <- factor(ga$Completed, levels = 0:1, labels = c("no","yes"))
+ga$Location.factor <- factor(ga$Location,levels = 1:4, labels = c("Odenton","White Marsh","Johns Hopkins Outpatient Center","Bayview"))
+```
+
+
+2. Report which variables have missing data and how many of these values are missing.
+
+```{r-missing-values}
+addmargins(table(ga$Age,useNA="always"))
+addmargins(table(ga$AgeGroup,useNA="always"))
+addmargins(table(ga$Race,useNA="always"))
+addmargins(table(ga$Shots,useNA="always"))
+addmargins(table(ga$Completed,useNA="always"))
+addmargins(table(ga$InsuranceType,useNA="always"))
+addmargins(table(ga$MedAssist,useNA="always"))
+addmargins(table(ga$Location,useNA="always"))
+addmargins(table(ga$LocationType,useNA="always"))
+addmargins(table(ga$PracticeType,useNA="always"))
+```
+
+3. What proportion of patients completed all three shots?
+
+```{r-proportion}
+tb <- table(ga$Completed.factor)
+prop.table(tb)
+pct <- round(100*prop.table(tb))
+pct.sign <- "%"
+paste(names(pct), " ", pct,pct.sign,sep = "")
+```
+33% of patients completed all shots
+
+4. Draw a bar chart showing the percentage of patients at each of the four locations.
+
+```{r-barplot, fig.width= 10}
+tbloc <- table(ga$Location.factor)
+locpct <- round(100*prop.table(tbloc))
+barplot(locpct,xlab = "Location", ylab = "Percent of Patients")
+```
+
+5. Use a crosstabulation to compare Age to AgeGroup, and Location to LocationType. Are the recodings into AgeGroup and LocationType done properly?
+
+```{r-crosstabulation}
+table(ga$Age,ga$AgeGroup.factor)
+
+ga$Locationtype.factor <- factor(ga$LocationType,levels = 0:1, labels = c("suburban","urban"))
+table(ga$Location.factor,ga$Locationtype.factor)
+```
+
+6. Create a new variable that combines the race categories into white, and non-white. Calculate the proportion of white patients at each of the four locations.
+
+```{r-new-variable}
+ga$nonwhite <- as.numeric(ga$Race > 0)
+ga$nonwhite.factor <- factor(ga$nonwhite,levels = 0:1, labels = c("white","nonwhite"))
+
+prop <-table(ga$Location.factor,ga$nonwhite.factor)
+addmargins(prop)
+round(100*prop.table(prop,margin = 1),2)
+```
+
+
+7. Does the likelihood of completing all four shots vary by AgeGroup, Race, or Location? Calculate the appropriate percentages and relative risks.
+
+```{r-oddsratio}
+library(epitools)
+oddsratio(ga$AgeGroup.factor,ga$Completed.factor)$measure
+oddsratio(ga$Race.factor,ga$Completed.factor)$measure
+oddsratio(ga$Location.factor,ga$Completed.factor)$measure
+```
+
+```{r-riskratio}
+riskratio(ga$AgeGroup.factor,ga$Completed.factor)$measure
+riskratio(ga$Race.factor,ga$Completed.factor)$measure
+riskratio(ga$Location.factor,ga$Completed.factor)$measure
+```
+
+The likelihood of completing all shots is variable accross all listed categories.
+
+
+8. Place all the key results into a Word document, PowerPoint presentation, as a PDF file or as an HTML file. Turn it in by email. Use the subject line: "Introduction to R, (your name), Part 2 Homework"
