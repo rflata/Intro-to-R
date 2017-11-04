@@ -8,41 +8,63 @@ Sys.Date()
 ```
 
 ```{r read-gardasil}
+#Reading in data from .csv file
 fn <- "gardasil.csv"
 ga <- read.csv(fn)
+#Head of table
 head(ga)
+#End of table
 tail(ga)
 ```
 1. Create factors for AgeGroup, Race, Completed, Location.
 
 ```{r-factors}
+#AgeGroup Factor
 ga$AgeGroup.factor <- factor(ga$AgeGroup,levels = 0:1, labels = c("11-17","18-26"))
+#Race Factor
 ga$Race.factor <- factor(ga$Race,levels = 0:3, labels = c("white","black","Hispanic","other/unknown"))
+#Completed Factor
 ga$Completed.factor <- factor(ga$Completed, levels = 0:1, labels = c("no","yes"))
+#Location Factor
 ga$Location.factor <- factor(ga$Location,levels = 1:4, labels = c("Odenton","White Marsh","Johns Hopkins Outpatient Center","Bayview"))
 ```
+Variable factors
 
 
 2. Report which variables have missing data and how many of these values are missing.
 
 ```{r-missing-values}
+#No missing data for Age
 addmargins(table(ga$Age,useNA="always"))
+#No missing data for AgeGroup
 addmargins(table(ga$AgeGroup,useNA="always"))
+#No missing data for Race
 addmargins(table(ga$Race,useNA="always"))
+#No missing data for Shots
 addmargins(table(ga$Shots,useNA="always"))
+#No missing data for Completed
 addmargins(table(ga$Completed,useNA="always"))
+#No missing data for InsuranceType
 addmargins(table(ga$InsuranceType,useNA="always"))
+#No missing data for MedAssist
 addmargins(table(ga$MedAssist,useNA="always"))
+#No missing data for Location
 addmargins(table(ga$Location,useNA="always"))
+#No missing data for LocationType
 addmargins(table(ga$LocationType,useNA="always"))
+#No missing data for PracticeType
 addmargins(table(ga$PracticeType,useNA="always"))
 ```
+No variables had missing data
 
 3. What proportion of patients completed all three shots?
 
 ```{r-proportion}
+#Proportion of patient's which completed shots
 tb <- table(ga$Completed.factor)
 prop.table(tb)
+
+#Converting proportion to percent
 pct <- round(100*prop.table(tb))
 pct.sign <- "%"
 paste(names(pct), " ", pct,pct.sign,sep = "")
@@ -52,44 +74,61 @@ paste(names(pct), " ", pct,pct.sign,sep = "")
 4. Draw a bar chart showing the percentage of patients at each of the four locations.
 
 ```{r-barplot, fig.width= 10}
+#Bar plot with percentage of patients at the locations (fig.width = 10)
 tbloc <- table(ga$Location.factor)
 locpct <- round(100*prop.table(tbloc))
 barplot(locpct,xlab = "Location", ylab = "Percent of Patients")
 ```
 
+Barplot with percentage of patient's at each location
+
 5. Use a crosstabulation to compare Age to AgeGroup, and Location to LocationType. Are the recodings into AgeGroup and LocationType done properly?
 
 ```{r-crosstabulation}
+#Crosstabulation for Age to AgeGroup
 table(ga$Age,ga$AgeGroup.factor)
 
+#Crosstabulation for Location to LocationType
 ga$Locationtype.factor <- factor(ga$LocationType,levels = 0:1, labels = c("suburban","urban"))
 table(ga$Location.factor,ga$Locationtype.factor)
 ```
 
+The recodings do appear to be done properly
+
 6. Create a new variable that combines the race categories into white, and non-white. Calculate the proportion of white patients at each of the four locations.
 
 ```{r-new-variable}
+#Creating new variable
 ga$nonwhite <- as.numeric(ga$Race > 0)
+#Variable factors
 ga$nonwhite.factor <- factor(ga$nonwhite,levels = 0:1, labels = c("white","nonwhite"))
-
+#Calculation proportion at each location
 prop <-table(ga$Location.factor,ga$nonwhite.factor)
 addmargins(prop)
 round(100*prop.table(prop,margin = 1),2)
 ```
 
 
+
 7. Does the likelihood of completing all four shots vary by AgeGroup, Race, or Location? Calculate the appropriate percentages and relative risks.
 
 ```{r-oddsratio}
+#Loading epitools library
 library(epitools)
+#Odds of completing shots by age group
 oddsratio(ga$AgeGroup.factor,ga$Completed.factor)$measure
+#Odds of completing shots by race
 oddsratio(ga$Race.factor,ga$Completed.factor)$measure
+#Odds of completing shots by location
 oddsratio(ga$Location.factor,ga$Completed.factor)$measure
 ```
 
 ```{r-riskratio}
+#Risk of completing shots by age group
 riskratio(ga$AgeGroup.factor,ga$Completed.factor)$measure
+#Risk of completing shots by race
 riskratio(ga$Race.factor,ga$Completed.factor)$measure
+#Risk of completing shots by location
 riskratio(ga$Location.factor,ga$Completed.factor)$measure
 ```
 

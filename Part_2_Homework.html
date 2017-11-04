@@ -123,9 +123,11 @@ $(document).ready(function () {
 <pre class="r"><code>R.version.string</code></pre>
 <pre><code>## [1] &quot;R version 3.4.2 (2017-09-28)&quot;</code></pre>
 <pre class="r"><code>Sys.Date()</code></pre>
-<pre><code>## [1] &quot;2017-11-01&quot;</code></pre>
-<pre class="r"><code>fn &lt;- &quot;gardasil.csv&quot;
+<pre><code>## [1] &quot;2017-11-03&quot;</code></pre>
+<pre class="r"><code>#Reading in data from .csv file
+fn &lt;- &quot;gardasil.csv&quot;
 ga &lt;- read.csv(fn)
+#Head of table
 head(ga)</code></pre>
 <pre><code>##   Age AgeGroup Race Shots Completed InsuranceType MedAssist Location
 ## 1  21        1    0     3         1             3         0        1
@@ -141,7 +143,8 @@ head(ga)</code></pre>
 ## 4            0            0
 ## 5            0            1
 ## 6            0            0</code></pre>
-<pre class="r"><code>tail(ga)</code></pre>
+<pre class="r"><code>#End of table
+tail(ga)</code></pre>
 <pre><code>##      Age AgeGroup Race Shots Completed InsuranceType MedAssist Location
 ## 1408  20        1    1     2         0             1         0        3
 ## 1409  12        0    0     1         0             1         0        3
@@ -159,64 +162,82 @@ head(ga)</code></pre>
 <ol style="list-style-type: decimal">
 <li>Create factors for AgeGroup, Race, Completed, Location.</li>
 </ol>
-<pre class="r"><code>ga$AgeGroup.factor &lt;- factor(ga$AgeGroup,levels = 0:1, labels = c(&quot;11-17&quot;,&quot;18-26&quot;))
+<pre class="r"><code>#AgeGroup Factor
+ga$AgeGroup.factor &lt;- factor(ga$AgeGroup,levels = 0:1, labels = c(&quot;11-17&quot;,&quot;18-26&quot;))
+#Race Factor
 ga$Race.factor &lt;- factor(ga$Race,levels = 0:3, labels = c(&quot;white&quot;,&quot;black&quot;,&quot;Hispanic&quot;,&quot;other/unknown&quot;))
+#Completed Factor
 ga$Completed.factor &lt;- factor(ga$Completed, levels = 0:1, labels = c(&quot;no&quot;,&quot;yes&quot;))
+#Location Factor
 ga$Location.factor &lt;- factor(ga$Location,levels = 1:4, labels = c(&quot;Odenton&quot;,&quot;White Marsh&quot;,&quot;Johns Hopkins Outpatient Center&quot;,&quot;Bayview&quot;))</code></pre>
+<p>Variable factors</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Report which variables have missing data and how many of these values are missing.</li>
 </ol>
-<pre class="r"><code>addmargins(table(ga$Age,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for Age
+addmargins(table(ga$Age,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25 
 ##   30   75   83   85  110  134  128   99  105   92   83   64   80   77   86 
 ##   26 &lt;NA&gt;  Sum 
 ##   82    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$AgeGroup,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for AgeGroup
+addmargins(table(ga$AgeGroup,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1 &lt;NA&gt;  Sum 
 ##  701  712    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$Race,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for Race
+addmargins(table(ga$Race,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1    2    3 &lt;NA&gt;  Sum 
 ##  732  443   52  186    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$Shots,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for Shots
+addmargins(table(ga$Shots,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    1    2    3 &lt;NA&gt;  Sum 
 ##  440  436  537    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$Completed,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for Completed
+addmargins(table(ga$Completed,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1 &lt;NA&gt;  Sum 
 ##  944  469    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$InsuranceType,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for InsuranceType
+addmargins(table(ga$InsuranceType,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1    2    3 &lt;NA&gt;  Sum 
 ##  275  723   84  331    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$MedAssist,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for MedAssist
+addmargins(table(ga$MedAssist,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1 &lt;NA&gt;  Sum 
 ## 1138  275    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$Location,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for Location
+addmargins(table(ga$Location,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    1    2    3    4 &lt;NA&gt;  Sum 
 ##  798  165   89  361    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$LocationType,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for LocationType
+addmargins(table(ga$LocationType,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1 &lt;NA&gt;  Sum 
 ##  963  450    0 1413</code></pre>
-<pre class="r"><code>addmargins(table(ga$PracticeType,useNA=&quot;always&quot;))</code></pre>
+<pre class="r"><code>#No missing data for PracticeType
+addmargins(table(ga$PracticeType,useNA=&quot;always&quot;))</code></pre>
 <pre><code>## 
 ##    0    1    2 &lt;NA&gt;  Sum 
 ##  515  365  533    0 1413</code></pre>
+<p>No variables had missing data</p>
 <ol start="3" style="list-style-type: decimal">
 <li>What proportion of patients completed all three shots?</li>
 </ol>
-<pre class="r"><code>tb &lt;- table(ga$Completed.factor)
+<pre class="r"><code>#Proportion of patient's which completed shots
+tb &lt;- table(ga$Completed.factor)
 prop.table(tb)</code></pre>
 <pre><code>## 
 ##        no       yes 
 ## 0.6680821 0.3319179</code></pre>
-<pre class="r"><code>pct &lt;- round(100*prop.table(tb))
+<pre class="r"><code>#Converting proportion to percent
+pct &lt;- round(100*prop.table(tb))
 pct.sign &lt;- &quot;%&quot;
 paste(names(pct), &quot; &quot;, pct,pct.sign,sep = &quot;&quot;)</code></pre>
 <pre><code>## [1] &quot;no 67%&quot;  &quot;yes 33%&quot;</code></pre>
@@ -224,14 +245,17 @@ paste(names(pct), &quot; &quot;, pct,pct.sign,sep = &quot;&quot;)</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Draw a bar chart showing the percentage of patients at each of the four locations.</li>
 </ol>
-<pre class="r"><code>tbloc &lt;- table(ga$Location.factor)
+<pre class="r"><code>#Bar plot with percentage of patients at the locations (fig.width = 10)
+tbloc &lt;- table(ga$Location.factor)
 locpct &lt;- round(100*prop.table(tbloc))
 barplot(locpct,xlab = &quot;Location&quot;, ylab = &quot;Percent of Patients&quot;)</code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAPACAMAAADja5SLAAAA9lBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZmYAZpAAZrY6AAA6OgA6Ojo6OmY6OpA6ZmY6ZpA6ZrY6kJA6kNtmAABmADpmOgBmOjpmOmZmZjpmZmZmZpBmkJBmkLZmkNtmtrZmtttmtv+QOgCQOjqQZgCQZjqQZmaQkGaQkJCQkLaQtraQttuQtv+Q29uQ2/+2ZgC2Zjq2kDq2kGa2kLa2tma2tpC2tra2ttu225C227a229u22/+2/7a2//++vr7bkDrbkGbbtmbbtpDbtrbbttvb25Db27bb29vb2//b/7bb/9vb////tmb/25D/27b/29v//7b//9v///+4fUnnAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3df2MT55qgaTmBWQyZQwaG7HGa7sA0me6wHXPojZmFzfoAszg9GAf5+3+ZUelnlaqEVfYjv4+L6/rjHHBAflFVPbcllUqjcwDg2o1KLwAAvkYCDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQw6ACPiFZ6kwIMxoAnaulWDVLpjQowGAOeqKPR/0csAQYIM+CJKsDhBBggzIAnqgCHE2CAMAOeqAIcToABwgx4ogpwOAEGCDPgiSrA4QQYIMyAJ6oAhxNggDADnqgCHE6AAcIMeKIKcDgBBggz4IkqwOEEGCDMgCeqAIcTYIAwA56oAhxOgAHCDHiiCnA4AQYIM+CJKsDhBBggzIAnqgCHE2CAMAOeqAIcToABwgx4ogpwOAEGCDPgiSrA4QQYIMyAJ6oAhxNggDADnqgCHE6AAcIMeKIKcDgBBggz4IkqwOEEGCDMgCeqAIcTYIAwA56oAhxOgAHCDHiiCnA4AQYIM+CJKsDhBBggzIAnqgCHE2CAMAOeqAIcToABwgx4ogpwOAEGCDPgiSrA4QQYIMyAJ6oAhxNggDADnqgCHE6AAcIMeKIKcDgBBggz4IkqwOEEGCDMgCeqAIcTYIAwA56oAhxOgAHCDHiiCnA4AQYIM+CJKsDhBBggzIAnqgCHE2CAMAOeqAIcToABwgx4ogpwOAEGCDPgiSrA4QQYIMyAJ6oAhxNggDADnqgCHE6AAcIMeKIKcDgBBggz4IkqwOEEGCDMzifq+OT90dHRq5OPu/5GLQIcToABwux2on54Nlq5/3qn36tFgMMJMECYXU7Us0ejplu/7vC7tQhwOAEGCLPDiXq6X0X33sHM3eo3e0929+1aBDicAAOE2d1E/fxwEtzntS+8mwT5m9939v1aBDicAAOE2d1EPW7ltkryg519vxYBDifAAGF2NlHHT0ej9SecT0ej29d3NrQAhxNggDA7m6iTh7ut55u7vrY7AhxOgAHCCDDbE2CAMLt8Cnpv/V1HnoK+4QQYIMzuJuphq7bVy8J3dvb9WgQ4nAADhNndRP20Pynwm9oXzib9bT0o3iEBDifAAGF2OFGPp5feOPjlqPLb7Eoc1/guJAGOJ8AAYXY5Ud/ur12Kcu+nHX63FgEOJ8AAYXY6Uccv6wnee3y9n4gkwOEEGCDMrifq+MPRy4ODg8dHr6/98wgFOJwAA4RJNFFHbVe8vdK9GhwBBgiTaKJ2BPhKqxPgcAIMEOZ6Jur4/dGrP/r/NQFORoABwuxuov55skjuu0ezk7C+7/sysAAnI8AAYXZ/Lejxi9V50Osfj3QBAU5GgAHC7D7Ah1V5/3Jw8EOV4H4FFuBkBBggzM4DfDrJ7uy55+pSlP0+DEmAkxFggDA7D/Dh6gMYqg9j6HUtSgFORoABwuw6wFV0l8879/04QgFORoABwuw6wMuXgmtf25oAJyPAAGEEmO0JMECYa3gNePUZwJ/2BfhGE2CAMDsNcFXe09qJV14DvuEEGCDMLgM88e0/vP7n5UPg6kvOgr7JBBggzI4DPDN93nn8933vA77hBBggzA4n6vjDyx/2VwGuirx6OXgrApyMAAOE2fVEnVZ4EeBbb/r9ZQFORoABwlzfRB3/e8/8CnA6AgwQJvVEFeBkBBggTOqJKsDJCDBAmNQTVYCTEWCAMKknqgAnI8AAYVJPVAFORoABwqSeqAKcjAADhEk9UQU4GQEGCJN6ogpwMgIMECb1RBXgZAQYIEzqiSrAyQgwQJjUE1WAkxFggDCpJ6oAJyPAAGFST1QBTkaAAcKknqgCnIwAA4RJPVEFOBkBBgiTeqIKcDICDBAm9UQV4GQEGCBM6okqwMkIMECY1BNVgJMRYIAwqSeqACcjwABhUk9UAU5GgAHCpJ6oApyMAAOEST1RBTgZAQYIk3qiCnAyAgwQJvVEFeBkBBggTOqJKsDJCDBAmNQTVYCTEWCAMKknqgAnI8AAYVJPVAFORoABwqSeqAKcjAADhEk9UQU4GQEGCJN6ogpwMgIMECb1RBXgZAQYIEzqiSrAyQgwQJjUE1WAkxFggDCpJ6oAJyPAAGFST1QBTkaAAcKknqgCnIwAA4RJPVEFOBkBBgiTeqIKcDICDBAm9UQV4GQEGCBM6okqwMkIMECY1BNVgJMRYIAwqSeqACcjwABhUk9UAU5GgAHCpJ6oApyMAAOEST1RBTgZAQYIk3qiCnAyAgwQJvVEFeBkBBggTOqJKsDJCDBAmNQTVYCTEWCAMKknqgAnI8AAYVJPVAFORoABwqSeqAKcjAADhEk9UQU4GQEGCJN6ogpwMgIMECb1RBXgZAQYIEzqiSrAyQgwQJjUE1WAkxFggDCpJ6oAJyPAAGFST1QBTkaAAcKknqgCnIwAA4RJPVEFOBkBBgiTeqIKcDICDBAm9UQV4GQEGCBM6okqwMkIMECY1BNVgJMRYIAwqSeqACcjwABhUk9UAU5GgAHCpJ6oApyMAAOEST1RBTgZAQYIk3qiCnAyAgwQJvVEFeBkBBggTOqJKsDJCDBAmJ1P1PHJ+6Ojo1cnHy/xdwU4GQEGCLPbifrh2Wjl/uu+f12AkxFggDC7nKhnj0ZNt37tdwMCnIwAA4TZ4UQ93a+ie+9g5m71m70nvW5BgJMRYIAwu5uonx9Ogvu89oV3kyB/83ufmxDgZAQYIMzuJupxK7dVkh/0uQkBTkaAAcLsbKKOn45G6084n45Gt/ucDS3AyQgwQJidTdTJw93W881dX/sSAU5GgAHCCDDbE2CAMLt8Cnpv/V1HnoK+4QQYIMzuJuphq7bVy8J3+tyEACcjwABhdjdRP+1PCvym9oWzSX9bD4q/SICTEWCAMDucqMfTS28c/HJU+W12JY5e70IS4GwEGCDMlybq28lj2PtvvvAHLvB2f+1SlHs/9VycAOciwABhOifqu0fVycrHs2j2vH5z3fhlPcF7j/t+IpIAJyPAAGG6JursGlaf5vHsd/XIdeMPRy8PDg4eH72+xOcRCnAyAgwQpmOifppds3ma4erE5X6v215hKR2udnulezU4AgwQpmOiHk/fPzR/z9Bpz3cOXWUpApydAAOEaU/U+RU0qsfBT/pfvGqT8fujV72fhBbgZAQYIEx7os6Tezw7/yoqwJe6HQFORoABwmwM8OHs9CsBZkWAAcJsCvDispGf9vtdvnnlz5O6D5NbfT35/z96LU6AcxFggDCdrwGPnixeAq4eCF/uJKxJx7v4NKSbTIABwnSfBX3r9T9PWzn+22jW4f4EeIAEGCBMx0RdpPPB7FeXfRdSdSHKvYOFv+6P9v4y+f8ffRzhDSbAAGG6JursGli3P04D/P3lXgE+n3360a3FpaSdhDUEAgwQpnOijt8d/Ph68v+f/+v911e58b9PHvb+4+yXAjwEAgwQZrcT9ezR4jOBBXgIBBggTMdZ0M1rVr1/2ftDjOo39rf5hxAK8BAIMECYjRfi6PzdJXyaPAi+/1GAB0GAAcLsPMDn4xeTB8HPBXgIBBggTGOi/r3+hqGZR1f9QODz2RuS/rIvwDefAAOEaUzU2fuP1l394wirNyRdJuQCnIwAA4RpTtTDjv7eivgshr/vC/AACDBAmOZEHR8dHf22P9r75WjpJOb7nP3c7yJYs8UJcC4CDBDmopOwihLgZAQYIMyF7wMuSYCTEWCAMKknqgAnI8AAYVJPVAFORoABwnRP1Pc/H6z0P3kqigAnI8AAYTZ/HOFSuVOyBDgZAQYI0zFR1y/HIcDMCTBAmI6JejyJ7ne/nCz9cf2rmhPgZAQYIEzH25CeRlx9MoQAJyPAAGE6L8Sx92uBlXQQ4GQEGCCMK2GxPQEGCNP5FLQA00mAAcJ0n4T15PoX0kWAkxFggDAdEzXPc9ACnIwAA4TZcCGOvcdBH0N4JQKcjAADhOk8CcuFOOgkwABhBJjtCTBAmI4A/3Cv6TsBZkaAAcKknqgCnIwAA4RJPVEFOBkBBgiTeqIKcDICDBBm00T98+jo1cfzcblPQqoIcDICDBCme6K+vTs7+/nzw1tvrnlBdQKcjAADhOmcqC8Wbz8q/MlIApyMAAOE6Zqox5P63vqX/UmAq88Gvv3x2he1IMDJCDBAmI6J+ml/NPpp8uC3ugBHVeByn8wgwMkIMECYjol6OBrdOZ8H+Px0+ptCBDgZAQYI0/l5wNXrvvMATx4Ol3sOWoCTEWCAMJ3Xgq7SOw9w0c8mFOBkBBggjACzPQEGCOMpaLYnwABhuk/CerAM8LGTsFgSYIAwHRP1dH4NjirAk197GxILAgwQpmOiVu/93XteBXj8t5ELcbAiwABhuibq54ejFZeiZEmAAcJ0TtTqMfCcD2NgRYABwmyYqGfPqs9D2rv/+npXs0aAkxFggDCpJ6oAJyPAAGFST1QBTkaAAcKknqgCnIwAA4SpT9TZZScb50BXXIqSOQEGCCPAbE+AAcI0AvzDve9+r/636TsBZkaAAcKknqgCnIwAA4RJPVEFOBkBBgjT8XGE749e1S7//P7lYx9HyIwAA4RpT9TZqVjdv7tmApyMAAOEEWC2J8AAYRoT9e8HE3/dH+395WDhkbchsSTAAGEaE/XT/qjDnVJrE+BsBBggTHOiHnb091axB8ACnI0AA4RpTtTx0dHRb/ujvV+Olk4KLawiwMkIMECYi07CKkqAkxFggDAXvg+4JAFORoABwqSeqAKcjAADhNliop64EhYzAgwQpnOijn9bvg/43l3vA2ZBgAHCdE3U0+bbgQWYOQEGCNMxUdcvx3HfU9DMCDBAmI6JelxF97eHo71/evloNNp7cv2LWhDgZAQYIEzH25CejkYPphfFejKN8e1y70kS4GQEGCBM54U49n6dpvfBrMblHgILcDICDBBm45WwTmefwnDqwxhYEmCAMBsD/Gl/+uTz5HflnoMW4GQEGCBM52vAVYDn5S16ZWgBTkaAAcJ0TNTD6WvAqw4LMHMCDBCm+21I1cu+s9OgT0ueBi3AyQgwQJiOiTp50FtFd5Leb17//w+dhMWSAAOE6bwU5fTyk9U7kCrV89GFCHAyAgwQpnOivns0ffn30bS/P133klYEOBkBBgjzxYn67uDg8R/XtZIOApyMAAOEST1RBTgZAQYIs/OJOj55f3R09OrkMqdSC3AyAgwQZn2inj3bH42+jXri+cOz+scavu69OAHORYABwjQn6vjFPJZ7/xhw22ePmh8sPLrV84RqAU5GgAHCNCfq4SqWD65806f71e3cO5i5O+16v09WEuBkBBggTGOifpok89bzk5N3jwLe/ltdz2Pvee0L7/ZHPS9rKcDJCDBAmMZEPVxcd7KK51UfAh+3ctv7VgU4GQEGCFOfqNW1r+bPER9f+QqUtRtb6nthaQFORoABwtQn6uQR6uKJ5/mnAV9B18co9f1oJQFORoABwqwFeNHHq38KoQAPkAADhNlZgMdP2+dxeQr6hhNggDA7C/DqjK6l6mXhXq8sC3AyAgwQZncBrt7TdPtN7QtnT/u+uUmAkxFggDC7C3B1JvWkuAe/HFV+m12Jo997mwQ4GQEGCLPDAJ+/3V+7FGXfzxYW4GQEGCDMLgN8Pn5ZT/De475vbBLgZAQYIMz6+4BnTxgf/ba//OXRq6u8IXj84ejlwcHB46PXl7gVAU5GgAHCrAW4S8BD4e2W0uFqt1e6V4MjwABhBJjtCTBAmMa1oN8fdbnSU9ALH45e/dF/cQKciwADhNnxRD2Zxnt+Mtat5xf98TUCnIwAA4TZ5UQ9e1ZV99fpRbFmvu93AwKcjAADhNnhRP00ew/S3q+nk//97uBg34U4bjoBBgizu4k6PaXr3t3JY+BHsytQjl+4FOUNJ8AAYXY3UY9Ho2/ezB8HP5l+pfowhl4PgQU4GQEGCLOziVrVdtrd49WnIvk4whtOgAHC7GyiLi9mOXkIfGf9a1sS4GQEGCDM7gM8+YUAD4QAA4TZZYBnZ1yN/9u9/zx/3nnyYFiAbzIBBgjTmKjjyFs+bJ9xdTxaPhjeigAnI8AAYRqXonwaed3n09abjs4eOgv6ZhNggDDtzwOO+Sjg2WnQo/+8Oul5ej3KXidBC3A2AgwQZncBPv/8qPFJStWFOfpdh0OAsxFggDDrH0f4JC7A1WPeZoBvvem5OAHORYABwjQmavWhCd/erf7nXs13QTn+9575FeB0BBggTGOino66BJ6Y1XdxApyLAAOEaU7Ud3cFmM0EGCBMe6LGvQZ8ZQKcjAADhBFgtifAAGHaE3X888GPvd6tuzsCnIwAA4RJPVEFOBkBBgizaaL+eTTx6o9rXUuLACcjwABhuifq28XZ0Hs/XfN6GgQ4GQEGCNM5UV/U3oT0fcHXgwU4GQEGCNM1UY+rh773j45+e7Y/6vkBgrEEOBkBBgjTMVE/7S8f945f9P4AhUgCnIwAA4TpmKiH9Ue9hyUfAgtwMgIMEKbjfcBP6w96Jw+H+32GbyQBTkaAAcJcdCWsotfFEuBkBBggjACzPQEGCOMpaLYnwABhnITF9gQYIEzHRD0djUaLC2C9nfz6ybUuqE6AkxFggDBdE3XyqHd065eTk5PfHrkQBzUCDBCma6KOn9YuRVnuFWABTkeAAcJ0TtTx8mLQeyUvBS3A2QgwQJhNE/X9zwcHBz++uta1tAhwMgIMECb1RBXgZAQYIEzqiSrAyQgwQJjUE1WAkxFggDCpJ6oAJyPAcJ1GRCu9SZuSLadJgJPJtvfCkJVu1SCV3qhNyZbTJMDJZNt7YciMsHDZRliy5TQJcDLZ9l4YMiMsXLYRlmw5TQKcTLa9F4bMCAuXbYQlW06TACeTbe+FITPCwmUbYcmW0yTAyWTbe2HIjLBw2UZYeznj90evaheAfv/ycbHLQQtwMtn2XhgyIyxcthHWXs7nh6Nvft/wu2smwMlk23thyIywcNlGmACzvWx7LwyZERYu2whrLOfvBxN/3R/t/eVg4dFIgFnItvfCkBlh4bKNsMZyPu13XTnkTqm1CXA22fZeGDIjLFy2EdZczmFHf28VewAswNlk23thyIywcNlGWHM546Ojo9/2R3u/HC2dFFpYRYCTybb3wpAZYeGyjbCLTsIqSoCTybb3wpAZYeGyjbAL3wdckgAnk23vhSEzwsJlG2HJltMkwMlk23thyIywcNlGWLLlNAlwMtn2XhgyIyxcthHWvZz3Px+s/OhSlMxk23thyIywcNlGWNdy1t4O7EIczGXbe2HIjLBw2UZYx3LWL8chwMxl23thyIywcNlGWMdyjifR/e6Xk6U/rn9VcwKcTLa9F4bMCAuXbYR1vA3pacmrTzYIcDLZ9l4YMiMsXLYR1nkhjr1fC6ykgwAnk23vhSEzwsJlG2GuhMX2su29MGRGWLhsI6zzKWgBplO2vReGzAgLl22EdZ+E9eT6F9JFgJPJtvfCkBlh4bKNsI7l5HkOWoCTybb3wpAZYeGyjbANF+LYe1zyYwgXBDiZbHsvDJkRFi7bCOs8CcuFOOiUbe+FITPCwmUbYQLM9rLtvTBkRli4bCOsI8A/3Gv6ToCZybb3wpAZYeGyjbBky2kS4GSy7b0wZEZYuGwjLNlymgQ4mWx7LwyZERYu2whLtpwmAU4m294LQ2aEhcs2wjYt58+jo1cfz8flPgmpIsDJZNt7YciMsHDZRlj3ct7enZ39/PnhrTfXvKA6AU4m294LQ2aEhcs2wjqX82Lx9qPCn4wkwMlk23thyIywcNlGWNdyjif1vfUv+5MAV58NfPvjtS9qQYCTybb3wpAZYeGyjbCO5XzaH41+mjz4rS7AURW43CczCHAy2fZeGDIjLFy2EdaxnMPR6M75PMDnp9PfFCLAyWTbe2HIjLBw2UZY5+cBV6/7zgM8eThc7jloAU4m294LQ2aEhcs2wjqvBV2ldx7gop9NKMDJZNt7YciMsHDZRpgAs71sey8MmREWLtsI8xQ028u298KQGWHhso2w7pOwHiwDfOwkLJay7b0wZEZYuGwjrGM5p/NrcFQBnvza25BYyLb3wpAZYeGyjbCO5VTv/d17XgV4/LeRC3Gwkm3vhSEzwsJlG2Fdy/n8cLRy1UtRjk/eHx0dvTq5TMYFOJlsey8MmREWLtsI61xO9Rh47mofxvDhWS3l91/3XpwA55Jt74UhM8LCZRthG5Zz9qz6PKS9/s1s3MijUdOtno+mBTiZbHsvDJkRFi7bCNvhck73q+jeO5i5O30+u98JXQKcTLa9F4bMCAuXbYTtbjnVK8l7z2tfeLc/6nlRDwFOJtveC0NmhIXLNsI2LGf8P6uTpj7/n/96+VOgj1u5rZL8oM9NCHAy2fZeGDIjLFy2Eda5nLMfRovrUO794yVvuOuDDE97vqlJgJPJtvfCkBlh4bKNsK7lnC6eK56+H6nXY9aVrotI972wtAAnk23vhSEzwsJlG2Edy/k06e/e99NHqn++uPQbgQV4gLLtvTBkRli4bCOs+1rQqyeKDy97Lej5Zzo0eAr6hsu298KQGWHhso2wjZ+GNHf5T0M6bNW2elm4V80FOJlsey8MmREWLtsI2/h5wJ2/66N6Jvt2/TpaZ0/7Pp8twMlk23thyIywcNlG2O4CXL0PaVLcg1+OKr/NrsTR74wuAU4m294LQ2aEhcs2wjqfgq69f6jvy7Z1b/fXLkW591PPxQlwLtn2XhgyIyxcthHWsZzj2jPF1fPIl3wf0sT4ZT3Be4/7llyAk8m298KQGWHhso2wjuVM3/17//nJycn7Z1f+PODxh6OXBwcHj49eX+JmBDiZbHsvDJkRFi7bCOtazqfG49Yrfh5wj6V0uNrtld7Yg5Nt74UhM8LCZRth3ZeiXH2M7/0rPf7ttxQBzi7b3gtDZoSFyzbCNn0Yw/ufDw4Ofnx+ffntIsDJZNt7YciMsHDZRthOlzN++cO9v9Q+UMmlKG+4bHsvDJkRFi7bCOtYzotbz9tfvIy/76+d/SzAN1y2vReGzAgLl22EXXQpyis4Xr6SuziRWoBvuGx7LwyZERYu2wi76EpYl1edS33r+cnJi+r/f7/UTQtwMtn2XhgyIyxcthHW+Qg4JMDHi0e+Z48WBRbgGy7b3gtDZoSFyzbCuq+EdblPIGyoXdGy+uW0xQJ8w2Xbe2HIjLBw2UZY13Le7o9u/XJyxRuux3bxOYQCfMNl23thyIywcNlGWMdT0D8f/LVxMYzLPSHdiG11dcsHAnzjZdt7YciMsHDZRljnSVij6ABXZ2Tt/SrAN122vReGzAgLl22EdQT4h3tN310qwM1PNaw+1vCbNwJ8w2Xbe2HIjLBw2UbY7pazdi7X5Lff/D8CfLNl23thyIywcNlG2O6WU70P+P4fq98f9n8+W4CTybb3wpAZYeGyjbAdLud4rbcvBPimy7b3wpAZYeGyjbBNy/nz6OjVx/PxHxv+81be7jd7O/m9AN9o2fZeGDIjLFy2Eda9nLd3Zw9WPz+89eYKNz5+92Pj8wzHL/YF+CbLtvfCkBlh4bKNsM7lvFi8XPv5YdAHM1yOACeTbe+FITPCwmUbYV3LqV68vfUv1YPV5UUkyxDgZLLtvTBkRli4bCOsYznV6cs/TR78Vs8Wr72b95oJcDLZ9l4YMiMsXLYR1rGcw+kbeGcBri6gEfDJDJckwMlk23thyIywcNlGWOfHEVav+84DPHk4XO45aAFOJtveC0NmhIXLNsI6rwVdpXce4L5XjwwlwMlk23thyIywcNlGmACzvWx7LwyZERYu2wjzFDTby7b3wpAZYeGyjbDuk7AeLAN87CQslrLtvTBkRli4bCOsYzmn82twVAGe/NrbkFjItvfCkBlh4bKNsI7lVO/93XteBXj8t5ELcbCSbe+FITPCwmUbYV3L+fxwtOJSlCxl23thyIywcNlGWOdyqsfAc1f6MIarEuBksu29MGRGWLhsI2zDcs6eVZ+HtHf/9fWuZo0AJ5Nt74UhM8LCZRthyZbTJMDJZNt7YciMsHDZRliy5TQJcDLZ9l4YMiMsXLYRtr6cs2f7o9G3j/8osph1ApxMtr0XhswIC5dthDWXM36xOPf5Hwutp0GAk8m298KQGWHhso2w5nIOV28/elBoQXUCnFCpK1wAACAASURBVEy2vReGzAgLl22ENZbzaX80uvX85OTdo7Lv/10Q4GSy7b0wZEZYuGwjrLGcw8V1r6pLcSR4CCzAyWTbe2HIjLBw2UZYfTnV9TfmF34u+hkMSwKcTLa9F4bMCAuXbYTVlzN53Lt44rnopxAuCXAy2fZeGDIjLFy2EbYW4OlHEDZ/WZAAJ5Nt74UhM8LCZRthAsz2su29MGRGWLhsI0yA2V62vReGzAgLl22ECTDby7b3wpAZYeGyjTABZnvZ9l4YMiMsXLYRJsBsL9veC0NmhIXLNsIEmO1l23thyIywcNlG2Pr7gH85mvptf/nLo1fF3hAswMlk23thyIywcNlG2FqAu5R7KCzAyWTbe2HIjLBw2UaYALO9bHsvDJkRFi7bCGtcC/r9URdPQTOXbe+FITPCwmUbYcmW0yTAyWTbe2HIjLBw2UZYsuU0CXAy2fZeGDIjLFy2EZZsOU0CnEy2vReGzAgLl22EJVtOkwAnk23vhSEzwsJlG2HJltMkwMlk23thyIywcNlGWLLlNAlwMtn2XhgyIyxcthGWbDlNApxMtr0XhswIC5dthCVbTpMAJ5Nt74UhM8LCZRthyZbTJMDJZNt7YciMsHDZRliy5TQJcDLZ9l4YMiMsXLYRlmw5TQKcTLa9F4bMCAuXbYQlW06TACeTbe+FITPCwmUbYcmW0yTAyWTbe2HIjLBw2UZYsuU0CXAy2fZeGDIjLFy2EZZsOU0CnEy2vReGzAgLl22EJVtOkwAnk23vhSEzwsJlG2HJltMkwMlk23thyIywcNlGWLLlNAlwMtn2XhgyIyxcthGWbDlNApxMtr0XhswIC5dthCVbTpMAJ5Nt74UhM8LCZRthyZbTJMDJZNt7YciMsHDZRliy5TQJcDLZ9l4YMiMsXLYRlmw5TQKcTLa9F4bMCAuXbYQlW06TACeTbe+FITPCwmUbYcmW0yTAyWTbe2HIjLBw2UZYsuU0CXAy2fZeGDIjLFy2EZZsOU0CnEy2vReGzAgLl22EJVtOkwAnk23vhSEzwsJlG2HJltMkwMlk23thyIywcNlGWLLlNAlwMtn2XhgyIyxcthGWbDlNApxMtr0XhswIC5dthCVbTpMAJ5Nt74UhM8LCZRthyZbTJMDJZNt7YciMsHDZRliy5TQJcDLZ9l4YMiMsXLYRlmw5TQKcTMjeOyJawFYhISMsXLaDJdlymgQ4mYC9t3SrBunKW4WUjLBw2Q6WZMtpEuBkQgJc+h8xONlmClEcLOGyHSzJltMkwMkIcEbZZgpRHCzhsh0syZbTJMDJCHBG2WYKURws4bIdLDtfzvjk/dHR0auTj5f4uwKcjABnlG2mEMXBEi7bwbLb5Xx4VjtT5P7rvn9dgJMR4IyyzRSiOFjCZTtYdrmcs0drJ2ve+rXfDQhwMgKcUbaZQhQHS7hsB8sOl3O6X0X33sHM3eo3e0963YIAJyPAGWWbKURxsITLdrDsbjmfH06C+7z2hXeTIH/ze5+bEOBkBDijbDOFKA6WcNkOlt0t57iV2yrJD/rchAAnI8AZZZspRHGwhMt2sOxsOeOno9H6E86no9HtPmdDC3AyApxRtplCFAdLuGwHy86WM3m423q+uetrXyLAyQhwRtlmClEcLOGyHSwCzPYEOKNsM4UoDpZw2Q6WXT4Fvbf+riNPQd9wApxRtplCFAdLuGwHy+6Wc9iqbfWy8J0+NyHAyQhwRtlmClEcLOGyHSy7W86n/UmB39S+cDbpb+tB8RcJcDICnFG2mUIUB0u4bAfLDpdzPL30xsEvR5XfZlfi6PUuJAHORoAzyjZTiOJgCZftYNnlct7ur12Kcu+nfjcgwMkIcEbZZgpRHCzhsh0sO13O+GU9wXuP+34ikgAnI8AZZZspRHGwhMt2sOx6OeMPRy8PDg4eH72+xOcRCnAyApxRtplCFAdLuGwHS6LljDpc7fZKb+zBEeCMss0UojhYwmU7WBItR4DTE+CMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYdvlxhF18HOFNJsAZZZspRHGwhMt2sAgw2xPgjLLNFKI4WMJlO1h2t5yzRwI8NAKcUbaZQhQHS7hsB8sOl1N9/G+/Tz9aJ8DJCHBG2WYKURws4bIdLLtcTlXgJ1e5AQFORoAzyjZTiOJgCZftYNnpcj4/7PeU8zoBTkaAM8o2U4jiYAmX7WDZ7XJOr/YktAAnI8AZZZspRHGwhMt2sOx2OeOnV3oILMDJCHBG2WYKURws4bIdLDtezqeDg//r8n9bgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMss0UojhYwmU7WJItp0mAkxHgjLLNFKI4WMJlO1iSLadJgJMR4IyyzRSiOFjCZTtYki2nSYCTEeCMYmbKiGAR26T0vjU4AtyDACcjwBnFjHqiRWyV0vvW4AhwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKQlwDwKcjABnZNRnZKukJMA9CHAyApyRUZ+RrZKSAPcgwMkIcEZGfUa2SkoC3IMAJyPAGRn1GdkqKX11AR6fvD86Onp18vESf1eAkxHgjIz6jGyVlL6uAH94Nlq5/7rvXxfgZAQ4I6M+I1slpa8pwGePRk23fu13AwKcjABnZNRnZKuk9BUF+HS/iu69g5m71W/2nvS6BQFORoAzMuozslVS+noC/PnhJLjPa194NwnyN7/3uQkBTkaAMzLqM7JVUvp6Anzcym2V5Ad9bkKAkxHgjIz6jGyVlL6aAI+fjkbrTzifjka3+5wNLcDJCHBGRn1GtkpKX02AJw93W883d32ttpQOV1lB1+1xRVfZILbKrlx5q9gsO2CrpHT1zRJJgOnjKhvEVtmVK28Vm2UHbJWUrr5ZIu3yKei99Xcd9X0KGgCGanc/Dxy2alu9LHxnZ98PAG6Q3QX40/6kwG9qXzib9Lf1oBgAvko7fEb8uHrCfe/gl6PKb7MrcfR6FxIADNYuX5J+u7/28vfeTzv8bgBwg+z0nLDxy3qC9x47AQsAZnZ9Uvb4w9HLg4ODx0ev1RcAlpK9KwoAvg4CDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAhzs3bO7o9Ho2/vPO/7b54ej2x+3vaGzrltg3af9+n16OLnvHyx/dzwa3TkfPx3t/dr4K5OvfPP79FcX3seTWxiNntS/0vwO22kvYYeON6zvaotYu9XTbe+E9V1+dd/39KXjqqbHUTP7o70W1Hnr43c/7E+Wdu/xH1t/6423Vdx0h5/p+w9auPQm/ioJcKi3+8v9d++n1n/tEeDxi95j/us0uU9XXZn8pmruwmEVz80B3uI+ns6jO7UvTL+DAF93gL98XK1uffujZvFHeyyo89bHL1dL+37rn67THt+1AH/5rt5MgPsQ4ECTo6quFdseAd56wn31DmsPUU+ru3159E/u7smvNwd4i/v4uHGDi+8gwNcb4IuOq/7LWv3RHgvquvXJX99qZVdY6bVqBHjtyZ8tCXAfAhyoenpy7/uTya/+nP5cvH48CvAO1O+pw9HewWpqfNqvHrxuDs92Ab7XGEOH1e8F+NIBvpSLjqv+y7rUAdbxV6b9vfW8eq72ww9rT5ZEf/trcbzc28fvHvX5iYLLEeA4x/VnoaY/ta8dYwK8A7UXgauHvP9jf3nHzaJx1QD/w35trH5+uPffBfiaA3zhcdV/WVEBbpwR8LbHQ8asx/dx7Z/QeHWH3RDgMNXLg/WDarIvr+2/ArwDtWe8Jnfanclv5/fxvDhXDfBP9WfUTke33wrw9Qb44uOq/7KCAjz54a/+pePtHzJmPb7rAW68usNuCHCY9cOvenpq/tjp7Fn1HNrH1TQav703+XH5u+fLVHzz+/jl3ckfuv+m+sJp/SWY8bsfvvRnv3qrMTH91fFiPM/v7Vl43tbusFmym/dxY3usVPOoNpMmf/PBanT++bL6S3vfPV9899sf302+zXdvFrf37fw80vYSdmiVytaO03U/rO1KzYV33erU6YZvMn3W/+yHam+f3cJyl58eDR8XPy71/Nadx1XtJ4rZsyCrLdpaxvna1lr90dXPb32Oye6lVc/AvOl9W2v7Xn03un5rAV7cwY07r/acU7UfHDde9Ln9ccM9elg7Lle/2vo5+6ES4CjVXGj+vHi6OH9nfmbD7f9YTKNPizMnb72Z/9XqqdPVQVk/QM8effnPfvWWMViG9Un969Wc/rfD2f2196Tx55b34dr2WKmGy6fVc9Cf9r/5ffntVuer3J5PmOrR8fTh2fL2lif6rC1hh5apbO84HffD2q60tvCOW5053fBNqvtqfhuzIbsI8Ly/9QBv+a03HlcXBLixjPWt1RHgPsfkpqWdfFyuZ+vbWt/3artRAWtPQc9D27zzand8VdXa8XH8hXt0uQedjmq/+uonmABHmexuayf/LX7UW+6+/2m+R69mzfz9MPVTKau/UjtAp+97+dKf/ep9rv1Yc6f2Y/X8kXE1Lu6u34XNAK9vj5VqotSe4z6e3PSiPfXzRR/Mvt+309u5U99mG5awQ4tB17HjtO+HtV1pfeHtW5073fBNJvfk//F07RbnM3va31qAt/3WG4+rLwe4uYz1rdUOcJ9jcvPSll/f+rZa+95qNyqheRLW/P5d39WXO8N069Ye8T6dv+2g6x5ddvp4+Y87dLq0AIc5bb0ANP8BuRot1c+AbxcncE6/8Lx6hmZ/+WRa9aa7j7UzTJYPMSYZ2Xv8cfZ2ww1/9iu3HADz4XFYz2z9DvvbaPmYuPE2pNb2WDmePak9H0qTv/hk8beqvzR9fvPD4mTR6tHl7Tfzv3Xr9eT/z54uHzKsLWGHjpc/D2zacWr3w9qutL7wxq2u6fwm06G72NnvnC8CvOxvI8DbfeuNx1UrwKst2rWMta219jakXsfk5qVN9bmt9r632o1KaGzn+WPy1p23fA569q84rj2JcWfjPdo4Hqd/PeQM+ZtOgKOctn9oPVzsn6snnufPf813vNXP8oufBY/nt1IbJfMpM/9Vx5/92h2vHmf+uvrt4ifu6R32ZvEH5/OwEeDW9li76eXP7tUz0Iu/tdrci8dBh8ubOawVe5Gb5hJ2aB7g7h1n/X5Y25XWF9641Y4At77JYhdffmH2GOlw0d/GPbLdt954XF0Q4MYy2ltrLcB9jsn60roK0ue22vve4fZncu1A14U4unb1xY+8841ef85p0z16vHyq42D2q0/7HkAIcJiO0TodFLU5MU/x6tyG+XFYHaDzXXF9lNRu9XDTn/3azQ/kxd0x/+3i5/L2HbYe4Nb2WGm+qFU9A90ew7PrfSy2z/xvNR7DXOs2O14+orxox2l/ZX3hjVvtCHDrm6yKPP/CNMCr/tYDvOW33nRcXRDg5jJWFltrLcB9jsmljp8NZt9y+9tq73vrC75ea9t57Z9Xu/PmP/LO96PFI9rlCXYd/7L5cXk6fT38yfmyyF83AY6y6Sf1xU57vjj66s+8tK4V0T5AN19XQoBn5q/61l78rP+Y077D1gLc3h4rs4qvHmI/WR/Df77/eX+0DPB8U01f4tv7y78u37t6ndvseDnHL9px2l9ZX3jrVhdON3yT5gmys1fkb//z8qF3PcDbfutLPgJuLmOutrWaAe51TNaX1rEx+9xWx75X9r0/tdeAPzwbbdrV50fc4iHsvKSrsx4779H5V46nJ6PeWXX76ybAUTqOxumxVNsTZ7+sn24yezlk8wFa+y/z/yTAbYfNS05O01t//8uFAV7bHivHixNlZvNm/tTa/KTr2UX4K/MALzfV4eI5vNl7agoEeJsdp2NZawtfv9Wl0w3fpHHG+HzqNh5KbQzwxm+96bi6IMDNZbS3VivAWx+TK90bs89tdex7h0UfFzbehnS8eOZ8/c6bPwe9eAg7D/F85Zvu0eVh+mD6VivPQE8JcJRNZ2s2r9Q02/H6BLh+aWMB7nTavJ+nT5DV35z05QC3t8fKcf1VrcPpKG+c6LMhwLUr9D/oXMIOLQN84Y7Tsay1ha/f6tLphm/SLN/ip83/9HD1uGpjgDd96+3Pgt4U4Pl5Q82t1Qxwn2OytZCV8R/nXfvT5tvq2PcSBfjzw7V3Si0DfDp/aWb5M27tmb1N9+jsL03+1Py9+qeegT4X4DjjDe9XbD0Cbs9gj4CvZvqz9CoR89/O76ZtArzxbpzPo+PZ6Kg/0Tb7Cf/b73785T8etgJ8Xn183qomN+cR8NrC1291qdcj4Dsfl++I/0KAN33rTcdVr0fA7a3VCvDWx+QXljb5E9/3uq2O3SFRgMert3E077zZc9Crh7DzoH75Hq3+0oPqJeDpf3wyexj81RPgMBuu2NP1GvDaj/TbvQZ8OvIacLfJfXKnNriqH8j/V/3NiRc+Bb3x7Yj1M6pPG1vmuP4ujY4AT/z527ONj4Cijf/b3fntLt+MdeGOs3FZy4WvXPga8OybdL4GPH1YNy/iFwO88Vt3HVe9XgNub63WU9DbH5Obl7Z+0seFt9Wx7+ULcPvOmz2dfFz/Vz2pn3TReY/OHigfzkfgHZfBmhLgMNMf9mu/n1+ztvZj8vFiHK/9SP+Fg73rZFYBXnc8+ub/rR3ws9/O77cLA9zeHvUbnv2nat4c1t/BWbvV0/WnoGvPzLY+EXFX26w+GhcP2i/acVpfaS18pTvAXWdBL/7a4eLR0+IZ4NpVyHp96w3HVT1VixDWAtxYRsfWaga41zG58ql5LejZbfe5rY59L1GAZ0+xd9x51b9j799WJ1FVPwHXT7rovBemD5T/7en8J7fqcl9f/WWwzgU40oZPbVn+mFxNktl5gMuzQlvPF3b8LN96O6cArzsdVR9SdKf529Wrjl8OcHt7rCzm0eSP/tPsGehWgM8etl4DXr2T5NoCvJx3i++1xY7T/sr6wht3REeAW9/k0/JSJvMGLsby4iDY+Ah487fedFytHlafPWwHuLGMjq219jakPsfk2tKWX3u7v/yxZOvbau97iQJ8PNpw503/Sf/l4eqfPvmR9/9eeyN3x1E1+cf/w/IdSH91GayKAAeafm7p4/XPLZ1eEub1+fm7+pWwquvinP/5YrQpqstzP+vXGvri84Zfs8k9eq95Edt7y8P7iwGe3n+t7bGymEfTl8Fmd/bq2dfqebnZqUPTv3RYf6CwunTQNb1scDy7bsLZo+13nPZX1hfeuPmOALe+yfTUm/tvVhd2ql8LunZWYZ9vvem4WoR5vLzE3HKLtpbR3lqnzZ8Ieh2TK9U/azT9/IjZh1J0709fuK32vpcmwGeLtyG177zpH/x2f7XQ6R3efJm/46ia3lvfLC9T6RnocwGO9aJ15l/ldPGF//JwefQtbThLdnYSYfe1oAW45XB1/C9+W3vjy4YAL+/j9e2xspxHqw9+nben/ndak/Nw1Nho17HNamedzlZ88Y7Tsay1hTfuiK4Ad1wL+tvGG1bqF+qet+iCtyG1vvX5puNq9c3/6WHzqGkto721Fn+09tPY1sdkzedH9Vu+9fvi3tn6tlr7XvEA12248+b/gNWePE3r6jWfznv0fH6ZzcXPHZ6BrghwqHer43F+HbfK29kwWH0a0mn703LW35TxdPFfOz7URoDXrS7wvvztohebA7y6j9e2R+OGlh+tNL+VRXsWUdh7/HRx2tPqbUjLq+/f+rVzCTuw/Dcs/gkX7jgbd7vlwlc2BLjr05BO6zFqfKLO6rXePt+60n1cLf7JD+qPs6uVtZbR3lqLP7p88bnPMVkzrv1wsHyevM9tre97mQK86c47Xz2lUft7zXeadR1Vp7V/pWegpwQ42Idn1UfOfHv/ef2LZ8/21z4PePr5ms3Pi51aDuhx9QTQ99NfzT9x9Xzjn2V5ks/yt/UYbghw/T5ubI+V49rjyfl9vWzPdLN8+/jj4mJLjcn54dn+aPlRqNezzaqdrPGBwxftOJ3Laix8ZVOA177J9HTxT5NafjvP5Op+qx70PPhCgDd+6/P5f+w4rv58sT/93qsTgGZbtLWM9tZa/NHV2V99jsnGIl5Or1Jxr77z9Dq+m/temgB/e//14qutO+98fZ2109423aPnqzcWu479kgADQT7tp5irSZYxZD7KKIYAA0GSlC/JMoZs/f0CXI4AA0GSlC/JMgbsXesCoVyKAANBkpQvyTKG6rRxZhVXIcBAkCTlS7KMofpUezM2VyPAQJAk5UuyjKGq3vz8vf6GEGAAKECAAaAAAQaAAgQYAAoQYAAoQIABoAABBoACBBgAChBgAChAgAGgAAEGgAIEGAAKEGAAKECAAaAAAQaAAgQYAAoQYAAoQIABoAABBoACBBgAChBgAChAgAGgAAEGgAIEGAAKEGAAKECAAaAAAQaAAgQYAAoQYAAoQIABoAABBoACBBgAChBgAChAgAGgAAEGgAIEGAAKEGAAKECAAaAAAQaAAgQYAAoQYAAoQIABoAABBoACBBgAChBgAChAgAGgAAEGgAIEGAAKEGC4IU5HowdXv5Wz59X/jp+Ovvn96jcGXIEAww0REeDxi9ltCDCUJ8BwQ0QEeHEbAgzlCTDcEJEBBsoTYLghBBiGRYDhhhBgGBYBhhuiK57jdz+MRqPvnn9cfuHt3dFo7/6bxe//fHlv8gf2vns+v4WpJ7XXgJu3MP36+GXzNoCdEGC4IToCfPZontRb81p+mn9h78ns98ejhdsfOwO8dgvV1//H/vKPATskwHBDtAP8+eGyr7Ocrr6w92v1+1V/p3+3HeD1W5h8fWV2G8COCDDcEO0AH04i+fjj+fjl5DHrncUXfpo9rK1+X+X1+z8mv/jwaPYQuPU2pPVbmAZ476eP1RuGvVwMuyXAcEO0Avxpf/Egdf6rSXBnX5j/4nTe5ekfmAZ3LcCtW6gCPH9x+Hj5l4GdEGC4IVoBriXycPEU853lf2q8gjspcleAW7dQBXj+TSZJvv3xHNgZAYYbohXgw1VlJ7W8087u3J/vf94fdQa4dQuTry9e+RVg2DEBhhtiPcC1WM5redg6b2r87of9+klWzQC3b0GA4foIMNwQHQFeXs/588POAH/aHzXPcm4F5FTZkAAAAdhJREFUeO0WBBiujwDDDdH/EfDsTUbffvfjL//R+RqwR8BQkgDDDfGl14Bnp1+tvwZ8vLxCx4aTsFq3IMBwfQQYbog+Z0FPT6mq1fS0+ySsrrOgBRiuiQDDDXHx+4BXX5jmdFXTs4fdAe56H7AAwzURYLghvnwlrGks51fCqi5jNX+GuXoKevrfZ2E9nf/BrithVf9BgOH6CDDcEKejuqqfX7gW9LTVjb8xDevstOgvXgtagOGaCDDcEO0Atz8NafmF2WPlF4v4Pn46O91q9mELD770aUgCDNdEgOGG6Ajw8tN8l39o+nnAo+8Wn+U7/c/fPv64PD9r/Gzyhe87Pg94/tcFGK6NAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAQIMAAUIMAAUIMAAUIAAA0ABAgwABQgwABQgwABQgAADQAECDAAFCDAAFCDAAFCAAANAAf8b0ZPUiYVVZzcAAAAASUVORK5CYII=" width="960" /></p>
+<p>Barplot with percentage of patient’s at each location</p>
 <ol start="5" style="list-style-type: decimal">
 <li>Use a crosstabulation to compare Age to AgeGroup, and Location to LocationType. Are the recodings into AgeGroup and LocationType done properly?</li>
 </ol>
-<pre class="r"><code>table(ga$Age,ga$AgeGroup.factor)</code></pre>
+<pre class="r"><code>#Crosstabulation for Age to AgeGroup
+table(ga$Age,ga$AgeGroup.factor)</code></pre>
 <pre><code>##     
 ##      11-17 18-26
 ##   11    30     0
@@ -250,7 +274,8 @@ barplot(locpct,xlab = &quot;Location&quot;, ylab = &quot;Percent of Patients&quo
 ##   24     0    77
 ##   25     0    86
 ##   26     0    82</code></pre>
-<pre class="r"><code>ga$Locationtype.factor &lt;- factor(ga$LocationType,levels = 0:1, labels = c(&quot;suburban&quot;,&quot;urban&quot;))
+<pre class="r"><code>#Crosstabulation for Location to LocationType
+ga$Locationtype.factor &lt;- factor(ga$LocationType,levels = 0:1, labels = c(&quot;suburban&quot;,&quot;urban&quot;))
 table(ga$Location.factor,ga$Locationtype.factor)</code></pre>
 <pre><code>##                                  
 ##                                   suburban urban
@@ -258,12 +283,15 @@ table(ga$Location.factor,ga$Locationtype.factor)</code></pre>
 ##   White Marsh                          165     0
 ##   Johns Hopkins Outpatient Center        0    89
 ##   Bayview                                0   361</code></pre>
+<p>The recodings do appear to be done properly</p>
 <ol start="6" style="list-style-type: decimal">
 <li>Create a new variable that combines the race categories into white, and non-white. Calculate the proportion of white patients at each of the four locations.</li>
 </ol>
-<pre class="r"><code>ga$nonwhite &lt;- as.numeric(ga$Race &gt; 0)
+<pre class="r"><code>#Creating new variable
+ga$nonwhite &lt;- as.numeric(ga$Race &gt; 0)
+#Variable factors
 ga$nonwhite.factor &lt;- factor(ga$nonwhite,levels = 0:1, labels = c(&quot;white&quot;,&quot;nonwhite&quot;))
-
+#Calculation proportion at each location
 prop &lt;-table(ga$Location.factor,ga$nonwhite.factor)
 addmargins(prop)</code></pre>
 <pre><code>##                                  
@@ -283,45 +311,53 @@ addmargins(prop)</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Does the likelihood of completing all four shots vary by AgeGroup, Race, or Location? Calculate the appropriate percentages and relative risks.</li>
 </ol>
-<pre class="r"><code>library(epitools)
+<pre class="r"><code>#Loading epitools library
+library(epitools)
+#Odds of completing shots by age group
 oddsratio(ga$AgeGroup.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##          odds ratio with 95% C.I.
 ## Predictor  estimate     lower   upper
 ##     11-17 1.0000000        NA      NA
 ##     18-26 0.8329207 0.6670009 1.03966</code></pre>
-<pre class="r"><code>oddsratio(ga$Race.factor,ga$Completed.factor)$measure</code></pre>
+<pre class="r"><code>#Odds of completing shots by race
+oddsratio(ga$Race.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##                odds ratio with 95% C.I.
 ## Predictor        estimate     lower     upper
 ##   white         1.0000000        NA        NA
 ##   black         0.5021170 0.3840888 0.6529575
 ##   Hispanic      0.7879574 0.4221671 1.4166645
 ##   other/unknown 0.9097329 0.6484316 1.2681132</code></pre>
-<pre class="r"><code>oddsratio(ga$Location.factor,ga$Completed.factor)$measure</code></pre>
+<pre class="r"><code>#Odds of completing shots by location
+oddsratio(ga$Location.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##                                  odds ratio with 95% C.I.
 ## Predictor                          estimate     lower     upper
 ##   Odenton                         1.0000000        NA        NA
 ##   White Marsh                     1.7888960 1.2738129 2.5114358
 ##   Johns Hopkins Outpatient Center 0.5195762 0.2981058 0.8645118
 ##   Bayview                         0.6799450 0.5142094 0.8939921</code></pre>
-<pre class="r"><code>riskratio(ga$AgeGroup.factor,ga$Completed.factor)$measure</code></pre>
+<pre class="r"><code>#Risk of completing shots by age group
+riskratio(ga$AgeGroup.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##          risk ratio with 95% C.I.
 ## Predictor  estimate     lower   upper
 ##     11-17 1.0000000        NA      NA
 ##     18-26 0.8848997 0.7629666 1.02632</code></pre>
-<pre class="r"><code>riskratio(ga$Race.factor,ga$Completed.factor)$measure</code></pre>
+<pre class="r"><code>#Risk of completing shots by race
+riskratio(ga$Race.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##                risk ratio with 95% C.I.
 ## Predictor        estimate     lower    upper
 ##   white         1.0000000        NA       NA
 ##   black         0.6196388 0.5120320 0.749860
 ##   Hispanic      0.8546703 0.5724981 1.275919
 ##   other/unknown 0.9417051 0.7614297 1.164662</code></pre>
-<pre class="r"><code>riskratio(ga$Location.factor,ga$Completed.factor)$measure</code></pre>
+<pre class="r"><code>#Risk of completing shots by location
+riskratio(ga$Location.factor,ga$Completed.factor)$measure</code></pre>
 <pre><code>##                                  risk ratio with 95% C.I.
 ## Predictor                          estimate     lower     upper
 ##   Odenton                         1.0000000        NA        NA
 ##   White Marsh                     1.4069421 1.1703719 1.6913310
 ##   Johns Hopkins Outpatient Center 0.6194893 0.4110868 0.9335425
 ##   Bayview                         0.7636364 0.6268663 0.9302470</code></pre>
+<p>The likelihood of completing all shots is variable accross all listed categories.</p>
 <ol start="8" style="list-style-type: decimal">
 <li>Place all the key results into a Word document, PowerPoint presentation, as a PDF file or as an HTML file. Turn it in by email. Use the subject line: “Introduction to R, (your name), Part 2 Homework”</li>
 </ol>
