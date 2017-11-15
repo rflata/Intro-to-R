@@ -1,0 +1,124 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r r-version-and-current-date}
+R.version.string
+Sys.Date()
+```
+
+```{r housing-data}
+#Reading in data
+house <- read.table(file="housing.txt",header=TRUE,as.is=TRUE)
+head(house)
+tail(house)
+```
+
+1. Convert the asterisks in the TAX variable to missing. How many missing values are there for AGE and for TAX?
+
+```{r asterisks-to-NA}
+#Converting asterisks to NAs
+house$age.years <- as.numeric(house$AGE)
+summary(house$age.years)
+```
+
+There are 49 missing values
+
+2. Create factors for NE, CUST, and COR. Draw bar charts for each of these factors.
+
+```{r factors}
+#NE factor
+house$NE.factor <- factor(house$NE, levels = 0:1, labels = c("No","Yes"))
+
+#CUST factor
+house$CUST.factor <- factor(house$CUST, levels = 0:1, labels = c("No","Yes"))
+
+#COR factor
+house$COR.factor <- factor(house$COR, levels = 0:1, labels = c("No","Yes"))
+```
+
+```{r bar-charts}
+#NE barplot
+tabNE <- table(house$NE.factor)
+barplot(tabNE, xlab ="In the Northeast", ylab = "Frequency")
+
+#CUST barplot
+tabCUST <- table(house$CUST.factor)
+barplot(tabCUST, xlab ="Custom", ylab = "Frequency")
+
+#COR barplot
+tablCOR <- table(house$COR.factor)
+barplot(tablCOR, xlabe="Corner",ylab="Frequency")
+```
+
+3. Find the largest house (biggest SQFT) in the data set. Is the largest house also the most expensive house?
+
+```{r max-sqft}
+#Summary of SQFT
+summary(house$SQFT)
+#Largest house
+house[which.max(house$SQFT), ]
+```
+```{r}
+#Summary of cost
+summary(house$PRICE)
+#Most expensive house
+house[which.max(house$PRICE), ]
+```
+The largest house is not the most expensive house
+
+4. Calculate frequency counts for FEATS. Are there any houses with the no features? Are there any houses with every possible feature?
+
+```{r frequencies}
+#FEATS frequencies
+table(house$FEATS)
+hist(house$FEATS, xlab = "Number of Features", ylab = "Frequency")
+```
+Two houses have no features
+No house has every feature (Max is 8, Total possible is 11)
+
+5. Evaluate the relationship between PRICE and SQFT using a scatterplot. Include a smooth curve. Do larger houses tend to cost more?
+
+```{r scatterplot}
+#Price vs Square Feet
+plot(house$PRICE,house$SQFT, xlab = "Price", ylab = "Square Feet")
+smooth.curve <- lowess(house$PRICE,house$SQFT)
+lines(smooth.curve)
+```
+
+Yes, larger houses tend to cost more
+
+6. Evaluate the relationship between CUST and PRICE using a boxplot. Calculate the mean price and standard deviation by CUST.
+
+```{r boxplot}
+#Boxplot CUST vs PRICE
+boxplot(PRICE~CUST.factor, data=house)
+
+#Mean
+by(house$PRICE,house$CUST.factor,mean,na.rm=TRUE)
+
+#SD
+by(house$PRICE,house$CUST.factor,sd,na.rm=TRUE)
+
+
+#Mean and SD
+grp.means <- by(house$PRICE,house$CUST.factor,mean,na.rm=TRUE)
+grp.stdev <- by(house$PRICE,house$CUST.factor,sd,na.rm=TRUE)
+colon <- ": "
+plus.minus <- "+/-"
+paste(names(grp.means),colon,round(grp.means,1),
+      plus.minus,round(grp.stdev,1),sep="")
+
+
+
+```
+
+
+7. What is the difference in average prices between northeast houses and other houses? What is the difference in average taxes?
+
+
+
+8. Are custombuilt houses more likely to appear on corner lots? Calculate the percentages and compute a relative risk.
+
+9. Place all the key results into a Word document, add a bit of commentary, and turn it in.
