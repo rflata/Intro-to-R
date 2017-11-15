@@ -21,9 +21,12 @@ tail(house)
 #Converting asterisks to NAs
 house$age.years <- as.numeric(house$AGE)
 summary(house$age.years)
+
+house$tax.value <- as.numeric(house$TAX)
+summary(house$tax.value)
 ```
 
-There are 49 missing values
+There are 49 missing values for age, and 10 missing values for taxes
 
 2. Create factors for NE, CUST, and COR. Draw bar charts for each of these factors.
 
@@ -49,7 +52,7 @@ barplot(tabCUST, xlab ="Custom", ylab = "Frequency")
 
 #COR barplot
 tablCOR <- table(house$COR.factor)
-barplot(tablCOR, xlabe="Corner",ylab="Frequency")
+barplot(tablCOR, xlab="Corner",ylab="Frequency")
 ```
 
 3. Find the largest house (biggest SQFT) in the data set. Is the largest house also the most expensive house?
@@ -75,6 +78,7 @@ The largest house is not the most expensive house
 table(house$FEATS)
 hist(house$FEATS, xlab = "Number of Features", ylab = "Frequency")
 ```
+
 Two houses have no features
 No house has every feature (Max is 8, Total possible is 11)
 
@@ -117,8 +121,36 @@ paste(names(grp.means),colon,round(grp.means,1),
 
 7. What is the difference in average prices between northeast houses and other houses? What is the difference in average taxes?
 
-
+```{r averages-by-NE}
+#Mean price by location
+by(house$PRICE,house$NE.factor,mean,na.rm=TRUE)
+price.means <- by(house$PRICE,house$NE.factor,mean,na.rm=TRUE)
+#Mean tax by location
+by(house$tax.value,house$NE.factor,mean,na.rm=TRUE)
+tax.means <- by(house$tax.value,house$NE.factor,mean,na.rm=TRUE)
+#Average difference taxes
+tax.dif <- tax.means[["Yes"]] - tax.means[["No"]]
+paste("Difference: ",round(tax.means[["Yes"]],2),"-",round(tax.means[["No"]],2),"=",round(tax.dif,2))
+#Average differencec price
+price.dif <- price.means[["Yes"]] - price.means[["No"]]
+paste("Difference: ",round(price.means[["Yes"]],2),"-",round(price.means[["No"]],2),"=",round(price.dif,2))
+```
 
 8. Are custombuilt houses more likely to appear on corner lots? Calculate the percentages and compute a relative risk.
+```{r}
+house$COR.factor.2 <- factor(house$COR, levels = 0:1, labels = c("Not-Corner","Corner"))
+house$CUST.factor.2 <- factor(house$CUST, levels = 0:1, labels = c("Not-Custom","Custom"))
+
+library(epitools)
+#Percentages
+tb <- table(house$COR.factor.2,house$CUST.factor.2)
+round(100*prop.table(tb,margin=2),2)
+
+#Relative risk
+riskratio(tb)$measure
+```
+
+Custom houses are not more likely to appear on corner lots
+
 
 9. Place all the key results into a Word document, add a bit of commentary, and turn it in.
