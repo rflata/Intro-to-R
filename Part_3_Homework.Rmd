@@ -1,5 +1,5 @@
 ---
-title: "Homework Part 3"
+title: "Homework Part 3 - Ryan Lata"
 output: html_document
 ---
 
