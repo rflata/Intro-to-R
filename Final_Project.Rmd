@@ -1,0 +1,67 @@
+---
+title: "Intro_to_R_Project"
+output: html_document
+---
+
+```{r r-version-and-current-date}
+R.version.string
+Sys.Date()
+```
+The data set I will be using is a set of Single Nucleotide Polymorphisms (SNPs) for 70 samples found through Whole Genome Sequencing (WGS). The SNPs in this analysis pertain to the pharmacogene SLCO1B1, which is important in the metabolism of statins, and other drugs. The SNPs were filtered from VCF files using the bioinformatics Astrolabe developed (https://www.nature.com/articles/npjgenmed20157). Whole genome sequences were obtained from the Genome Center data warehouse at Children's Mercy Hospital. The samples used were purchased from Coriell biorepository (https://www.coriell.org/).
+```{r reading-data}
+#Reading data into R
+variants <- read.table('rformat.txt',sep=',',header = TRUE)
+head(variants)
+tail(variants)
+```
+
+Genders were obtained from the Coriell Biorepository website (Males = 0, Females = 1)
+```{r gender-factor}
+#Factoring sample genders
+variants$gender.factor <- factor(variants$Gender,levels = 0:1, labels = c('Males','Females'))
+```
+
+Barplot showing the frequency of each SNP
+```{r barplot, fig.width=11, fig.height=9}
+#Setting margins for the plot
+par(mar=c(13,4.1,4.1,2))
+#Plotting SNPs
+barplot(table(variants$SNP),las =2,ylim=c(0,100),)
+#Creating lines at 10 point intervals
+abline(h=1:10 *10)
+#Redrawing barplot to on the lines
+barplot(table(variants$SNP),add=TRUE,las=2)
+#Labeling plot
+mtext(text = 'SLCO1B1 SNPs', side = 1, line = 12)
+box()
+```
+
+Haplotype phasing is an important and difficult task in genetics. It involves segregating each variant found in an individual to a particular chromosome. A number of bioinformatics tools perform this task through predictive modeling of large datasets to determine the most likely haplotypes. I will be doing a very simplified version of this by checking if there is a strong positive correlation between any two variants, and plotting the correlation values using the "corrplot" r library.
+```{r correlation}
+#Loading the corrplot library
+library(corrplot)
+#Create a png of the plot (to increase size in html file)
+png(height=1500,width=1500,file='correlation.png')
+#Calculating the correlation between SNPs
+M <- cor(table(variants$Sample,variants$SNP))
+#Creating plot
+corrplot(M,type="upper",method = "circle",tl.pos='td',tl.cex = 1.5)
+#Closing image
+dev.off()
+#Loading the knitr library to include the png in the html file
+library(knitr)
+knitr::include_graphics('C:/Users/ryanl/OneDrive/Documents/Intro-to-R/correlation.png')
+```
+
+Calculating how often haplotypes occur together. Each haplotype will infer a functional level to the coded protein, so a person with two non-functional haplotype would have no protein function.
+```{r remove-duplicate-rows,fig.width=10,fig.height=10}
+#Creating a new data frame with only a single column for each sample with haplotype information
+haps <-unique(variants[,1:3])
+#Calculating the proportion where each haplotype occured together
+prop.table(table(haps$Hap1,haps$Hap2))
+#Mosaic plot of data
+mosaicplot(haps$Hap1~haps$Hap2,las=2,color=99:100, xlab='Chromosome 1',ylab='Chromosome 2',main="Mosiacplot Haplotypes")
+```
+
+
+
